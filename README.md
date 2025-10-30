@@ -61,6 +61,23 @@ int main() {
 
 ---
 
+## 🗂️ Repository Structure
+
+- `bin/` — prebuilt demo, benchmark, and test executables.
+- `build/obj/` — assembled object files ready for linking.
+- `docs/` — markdown documentation plus generated HTML in `docs/html/`.
+- `include/` — public C headers for the FP-ASM library.
+- `logs/` — build and diagnostic logs grouped together.
+- `scripts/python/` — utility Python tooling such as documentation generators.
+- `scripts/unix/` — POSIX helper scripts that analyze the assembly.
+- `scripts/windows/` — Windows build and demo launch batch files.
+- `src/asm/` — NASM sources (with test artifacts in `src/asm/tests/`).
+- `src/c/demos/` — C demos and benchmarks showcasing each module.
+- `src/c/tests/` — automated regression and verification tests.
+- `src/c/tools/` — auxiliary analysis and validation programs.
+
+---
+
 ## 📊 Library at a Glance
 
 | Metric | Value |

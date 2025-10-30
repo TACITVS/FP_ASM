@@ -2,6 +2,10 @@
 
 **Learn the FP-ASM library through progressive examples - from basics to advanced patterns.**
 
+> ## ⚠️ Platform Notice
+> FP-ASM currently supports **Windows x64 only** because every assembly module is authored for the Microsoft calling convention.
+> Once this phase of the project is complete we will ship matching System V variants and restore Linux availability.
+
 ---
 
 ## Table of Contents

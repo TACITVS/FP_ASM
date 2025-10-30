@@ -9,6 +9,8 @@
 
 **A complete, production-ready functional programming toolkit for C with hand-optimized x64 assembly and AVX2 SIMD acceleration. 100% FP coverage achieved!**
 
+> ⚠️ **Platform Availability**: During this phase FP-ASM ships **Windows x64-only** builds because our assembly kernels assume the Microsoft calling convention. Linux support will arrive once we complete the port to the System V ABI in the next phase.
+
 ---
 
 ## 🎉 What is FP-ASM?

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - FP-ASM Library</title>
+    <title>FP-ASM Practical Examples - FP-ASM Library</title>
     <style>
         * {
             margin: 0;
@@ -341,10 +341,10 @@
             <h2>📚 Documentation</h2>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">🏠 Home</a></li>
+                    <li><a href="index.html" class="">🏠 Home</a></li>
                     <li><a href="README.html" class="">📖 Overview</a></li>
                     <li><a href="QUICK_START.html" class="">🚀 Quick Start</a></li>
-                    <li><a href="EXAMPLES.html" class="">🧪 Practical Examples</a></li>
+                    <li><a href="EXAMPLES.html" class="active">🧪 Practical Examples</a></li>
                     <li><a href="API_REFERENCE.html" class="">📘 API Reference <span class="badge">36 funcs</span></a></li>
                     <li><a href="AUTO_API_REFERENCE.html" class="">🧵 Header Reference</a></li>
                     <li><a href="COMPLETE_LIBRARY_REPORT.html" class="">🎉 Journey Report</a></li>
@@ -356,122 +356,150 @@
             </nav>
         </aside>
         <main class="content">
-            
-<h1>Welcome to FP-ASM Library Documentation</h1>
+            <h1>FP-ASM Practical Examples</h1>
 
-<p>A complete, production-ready functional programming toolkit for C with hand-optimized x64 assembly and AVX2 SIMD acceleration.</p>
+This guide provides end-to-end walk-throughs that link the rich Markdown
+documentation with the generated HTML site. Every example below includes
+links to the rendered HTML page so you can jump directly into the styled
+reference after reading the Markdown summary.
 
-<h2>🎯 Quick Navigation</h2>
+<hr>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0;">
-    <div style="padding: 20px; background: #ecf0f1; border-radius: 8px; border-left: 4px solid #3498db;">
-        <h3>📖 Getting Started</h3>
-        <p>New to FP-ASM? Start here!</p>
-        <a href="README.html">Read the Overview</a> •
-        <a href="QUICK_START.html">Quick Start Tutorial</a>
-    </div>
+<h2>1. Summing Telemetry Streams</h2>
 
-    <div style="padding: 20px; background: #ecf0f1; border-radius: 8px; border-left: 4px solid #27ae60;">
-        <h3>🧪 Examples & Guides</h3>
-        <p>See the library in action with complete samples</p>
-        <a href="EXAMPLES.html">Hands-on Examples</a> •
-        <a href="AUTO_API_REFERENCE.html">Header Commentary</a>
-    </div>
+<strong>Scenario</strong>: Reduce a stream of sensor readings in real time.
 
-    <div style="padding: 20px; background: #ecf0f1; border-radius: 8px; border-left: 4px solid #e67e22;">
-        <h3>🎉 Achievement Reports</h3>
-        <p>See the journey to 100% completion</p>
-        <a href="COMPLETE_LIBRARY_REPORT.html">Journey Report</a> •
-        <a href="ACHIEVEMENT_SUMMARY.html">Final Summary</a>
-    </div>
-</div>
-
-<h2>📊 Library Statistics</h2>
-
-<table>
-    <tr>
-        <th>Metric</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td><strong>Total Functions</strong></td>
-        <td><span class="badge-green">36</span></td>
-    </tr>
-    <tr>
-        <td><strong>Assembly Modules</strong></td>
-        <td><span class="badge-blue">10</span></td>
-    </tr>
-    <tr>
-        <td><strong>FP Completeness</strong></td>
-        <td><span class="badge-green">100%</span></td>
-    </tr>
-    <tr>
-        <td><strong>Performance Range</strong></td>
-        <td><span class="badge-orange">1.0-4.0x vs GCC -O3</span></td>
-    </tr>
-    <tr>
-        <td><strong>Platform</strong></td>
-        <td>Windows x64 • AVX2</td>
-    </tr>
-    <tr>
-        <td><strong>Status</strong></td>
-        <td><span class="badge-green">Production Ready</span></td>
-    </tr>
-</table>
-
-<h2>🚀 Quick Example</h2>
-
-<pre><code>#include &lt;stdio.h&gt;
+<pre><code>#include <stdio.h>
 #include "fp_core.h"
 
-int main() {
-    // Sum an array (1.5-1.8x faster than C)
-    int64_t numbers[] = {1, 2, 3, 4, 5};
-    int64_t sum = fp_reduce_add_i64(numbers, 5);
-    printf("Sum: %lld\n", sum);  // Output: 15
+int main(void) {
+    int64_t telemetry[] = {42, 55, 60, 39, 41, 58};
+    size_t count = sizeof telemetry / sizeof telemetry[0];
 
-    // Find median
-    double data[] = {25.3, 19.2, 28.5, 21.8};
-    fp_sort_f64(data, 4);
-    printf("Median: %.1f\n", data[2]);
-
+    int64_t sum = fp_reduce_add_i64(telemetry, count);
+    printf("Total telemetry: %lld\n", sum);
     return 0;
 }
 </code></pre>
 
-<p><strong>Compile:</strong> <code>gcc your_program.c fp_core_*.o -o your_program.exe</code></p>
-
-<h2>🎓 What Makes FP-ASM Special?</h2>
-
-<ul>
-    <li><strong>✅ 100% Complete</strong> - All standard FP operations from Haskell/ML/Lisp</li>
-    <li><strong>⚡ High Performance</strong> - 1.0-4.0x faster than GCC -O3</li>
-    <li><strong>🔧 Production Ready</strong> - Tested, documented, ABI-compliant</li>
-    <li><strong>📦 Zero Dependencies</strong> - Just include and link</li>
-    <li><strong>🎯 Type Safe</strong> - Separate i64 and f64 variants</li>
-    <li><strong>📚 Well Documented</strong> - 170+ KB of guides and references</li>
-</ul>
-
-<h2>📖 Documentation Overview</h2>
-
-<ul>
-    <li><strong><a href="README.html">README</a></strong> - Main overview and quick examples</li>
-    <li><strong><a href="QUICK_START.html">Quick Start</a></strong> - Tutorial from basics to advanced</li>
-    <li><strong><a href="API_REFERENCE.html">API Reference</a></strong> - Complete docs for all 36 functions</li>
-    <li><strong><a href="AUTO_API_REFERENCE.html">Header Reference</a></strong> - Auto generated from Doxygen comments</li>
-    <li><strong><a href="EXAMPLES.html">Practical Examples</a></strong> - End-to-end scenarios using the API</li>
-    <li><strong><a href="COMPLETE_LIBRARY_REPORT.html">Journey Report</a></strong> - 40% → 100% story</li>
-    <li><strong><a href="TIER1_COMPLETENESS_REPORT.html">TIER 1 Report</a></strong> - List operations (scans, filter, partition)</li>
-    <li><strong><a href="TIER2_COMPLETENESS_REPORT.html">TIER 2 Report</a></strong> - Sorting & sets details</li>
-    <li><strong><a href="TIER3_COMPLETENESS_REPORT.html">TIER 3 Report</a></strong> - Grouping, unfold, boolean operations</li>
-    <li><strong><a href="ACHIEVEMENT_SUMMARY.html">Achievement Summary</a></strong> - Final celebration</li>
-</ul>
+<ul><li><a href="API_REFERENCE.html#module-1-simple-folds">Markdown API</a> →</li>
+  <a href="API_REFERENCE.html">HTML API</a>
+<li><a href="AUTO_API_REFERENCE.html#fp_reduce_add_i64--fp_reduce_add_f64">Autogenerated header notes</a></li>
 
 <hr>
 
-<p style="text-align: center; color: #7f8c8d; margin-top: 40px;">
-    <em>Bringing Haskell's elegance to C's performance. One assembly instruction at a time.</em> 💙⚡
-</p>
+<h2>2. Batch Normalisation with AXPY</h2>
+
+<strong>Scenario</strong>: Apply scale-and-offset to a vector (AXPY pattern).
+
+<pre><code>#include <stdio.h>
+#include "fp_core.h"
+
+int main(void) {
+    double samples[] = {1.2, 0.5, -0.8, 2.1};
+    double adjusted[4];
+
+    fp_map_axpy_f64(samples, samples, adjusted, 4, 0.75);
+
+    for (size_t i = 0; i < 4; ++i) {
+        printf("%.3f\n", adjusted[i]);
+    }
+    return 0;
+}
+</code></pre>
+
+<li><a href="QUICK_START.html#lesson-2-fused-operations-map--reduce">Markdown guide</a> →</li>
+  <a href="QUICK_START.html">HTML guide</a>
+<li><a href="AUTO_API_REFERENCE.html#fp_map_axpy_f64--fp_map_axpy_i64">Autogenerated header notes</a></li>
+
+<hr>
+
+<h2>3. Stream Compaction with Predicates</h2>
+
+<strong>Scenario</strong>: Keep only positive values and partition the rest.
+
+<pre><code>#include <stdio.h>
+#include "fp_core.h"
+
+int main(void) {
+    int64_t raw[] = {-2, 4, -1, 6, 0, 9};
+    int64_t positives[6];
+    int64_t pass[6];
+    int64_t fail[6];
+    size_t pass_count, fail_count;
+
+    size_t filtered = fp_filter_gt_i64_simple(raw, positives, 6, 0);
+    fp_partition_gt_i64(raw, pass, fail, 6, 0, &pass_count, &fail_count);
+
+    printf("Filtered positives: %zu\n", filtered);
+    printf("Partition pass: %zu, fail: %zu\n", pass_count, fail_count);
+    return 0;
+}
+</code></pre>
+
+<li><a href="TIER1_COMPLETENESS_REPORT.html#module-7-stream-compaction">Markdown analysis</a> →</li>
+  <a href="TIER1_COMPLETENESS_REPORT.html">HTML analysis</a>
+<li><a href="AUTO_API_REFERENCE.html#fp_filter_gt_i64_simple">Autogenerated header notes</a></li>
+
+<hr>
+
+<h2>4. Sorting and Percentiles for Analytics</h2>
+
+<strong>Scenario</strong>: Sort collected samples and compute the 95th percentile.
+
+<pre><code>#include <stdio.h>
+#include "fp_core.h"
+
+int main(void) {
+    double latencies[] = {11.2, 9.8, 10.4, 14.6, 12.5, 9.3};
+    size_t count = sizeof latencies / sizeof latencies[0];
+
+    fp_sort_f64(latencies, count);
+    double p95 = fp_percentile_f64(latencies, count, 0.95);
+
+    printf("95th percentile latency: %.2f ms\n", p95);
+    return 0;
+}
+</code></pre>
+
+<li><a href="TIER2_COMPLETENESS_REPORT.html#percentile-analytics">Markdown report</a> →</li>
+  <a href="TIER2_COMPLETENESS_REPORT.html">HTML report</a>
+<li><a href="AUTO_API_REFERENCE.html#fp_percentile_f64">Autogenerated header notes</a></li>
+
+<hr>
+
+<h2>5. Linear Regression for Trend Forecasting</h2>
+
+<strong>Scenario</strong>: Fit a trend line to sales data using the regression helpers.
+
+<pre><code>#include <stdio.h>
+#include "fp_core.h"
+
+int main(void) {
+    double x[] = {1, 2, 3, 4, 5};
+    double y[] = {3.0, 4.5, 5.0, 6.0, 7.5};
+    size_t n = sizeof x / sizeof x[0];
+
+    LinearRegression model;
+    fp_linear_regression_f64(x, y, n, &model);
+
+    printf("Slope: %.3f, Intercept: %.3f, R^2: %.3f\n",
+           model.slope, model.intercept, model.r_squared);
+    return 0;
+}
+</code></pre>
+
+<li><a href="COMPLETE_LIBRARY_REPORT.html#algorithm-4-linear-regression">Markdown coverage</a> →</li>
+  <a href="COMPLETE_LIBRARY_REPORT.html">HTML coverage</a>
+<li><a href="AUTO_API_REFERENCE.html#fp_linear_regression_f64">Autogenerated header notes</a></li>
+
+<hr>
+
+<h3>See Also</h3>
+
+<li>Full <a href="README.html">README</a> → <a href="README.html">HTML overview</a></li>
+<li>Complete <a href="API_REFERENCE.html">API Reference</a> → <a href="API_REFERENCE.html">HTML API</a></li>
+<li>Auto-generated <a href="AUTO_API_REFERENCE.html">Header Reference</a> → <a href="AUTO_API_REFERENCE.html">HTML header view</a></li></ul>
 
         </main>
     </div>

@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""Extract Doxygen-style comments from fp_core.h into Markdown.
+
+This utility scans the public header for comment blocks that use
+"Doxygen" style markers (``/** ... */``) and associates them with the
+following declarations. The result is a structured Markdown file that
+summarises each API entry alongside its prototype.
+
+The generated output keeps the ordering from the header so it is easy to
+cross-reference with the original source.
+"""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, List, Sequence
+
+ROOT = Path(__file__).resolve().parents[2]
+INCLUDE_DIR = ROOT / "include"
+DEFAULT_HEADER = INCLUDE_DIR / "fp_core.h"
+DEFAULT_OUTPUT = ROOT / "docs" / "AUTO_API_REFERENCE.md"
+
+
+@dataclass
+class CommentBlock:
+    """Pair a Doxygen-style comment with the declarations that follow it."""
+
+    comment_lines: List[str]
+    declarations: List[str]
+
+    @property
+    def symbol_names(self) -> Sequence[str]:
+        """Extract the primary symbol names from the declarations."""
+
+        names: List[str] = []
+        for decl in self.declarations:
+            # Capture function or typedef names (fp_* or struct typedefs)
+            match = re.findall(r"\b(fp_[A-Za-z0-9_]+|Quartiles|LinearRegression)\b", decl)
+            for name in match:
+                if name not in names:
+                    names.append(name)
+        return names
+
+
+def _clean_comment_lines(raw_lines: Iterable[str]) -> List[str]:
+    cleaned: List[str] = []
+    for raw in raw_lines:
+        line = raw.lstrip()
+        if line.startswith("*"):
+            line = line[1:]
+            if line.startswith(" "):
+                line = line[1:]
+        cleaned.append(line.rstrip())
+    # Trim leading/trailing blank lines
+    while cleaned and cleaned[0] == "":
+        cleaned.pop(0)
+    while cleaned and cleaned[-1] == "":
+        cleaned.pop()
+    return cleaned
+
+
+def _collect_comment_blocks(header_text: str) -> List[CommentBlock]:
+    lines = header_text.splitlines()
+    i = 0
+    blocks: List[CommentBlock] = []
+
+    while i < len(lines):
+        line = lines[i]
+        if line.strip().startswith("/**"):
+            i += 1
+            comment_lines: List[str] = []
+            while i < len(lines) and "*/" not in lines[i]:
+                comment_lines.append(lines[i])
+                i += 1
+            if i < len(lines) and "*/" in lines[i]:
+                closing = lines[i].split("*/", 1)[0]
+                if closing.strip().startswith("*"):
+                    comment_lines.append(closing)
+                i += 1  # Skip past the closing */
+
+            cleaned_comment = _clean_comment_lines(comment_lines)
+
+            declarations: List[str] = []
+            current_parts: List[str] = []
+            while i < len(lines):
+                stripped = lines[i].strip()
+                if not stripped:
+                    if current_parts:
+                        declarations.append(" ".join(current_parts).strip())
+                        current_parts = []
+                    if declarations:
+                        i += 1
+                        break
+                    i += 1
+                    continue
+                if stripped.startswith(("/*", "//", "#")):
+                    if current_parts:
+                        declarations.append(" ".join(current_parts).strip())
+                        current_parts = []
+                    break
+
+                current_parts.append(stripped)
+                if stripped.endswith((";", "};")):
+                    declarations.append(" ".join(current_parts).strip())
+                    current_parts = []
+                i += 1
+
+            if current_parts:
+                declarations.append(" ".join(current_parts).strip())
+
+            declarations = [decl for decl in declarations if decl]
+            if cleaned_comment and declarations:
+                blocks.append(CommentBlock(cleaned_comment, declarations))
+            continue
+        i += 1
+
+    return blocks
+
+
+def _format_block(block: CommentBlock) -> List[str]:
+    lines: List[str] = []
+    names = block.symbol_names
+    if names:
+        title = " / ".join(names)
+    else:
+        title = block.declarations[0]
+    lines.append(f"## {title}")
+    lines.append("")
+    lines.append("```c")
+    for decl in block.declarations:
+        lines.append(decl)
+    lines.append("```")
+    lines.append("")
+    lines.extend(block.comment_lines)
+    lines.append("")
+    return lines
+
+
+def generate_api_markdown(header_path: Path = DEFAULT_HEADER, output_path: Path = DEFAULT_OUTPUT) -> Path:
+    """Generate the Markdown file from Doxygen comment blocks."""
+
+    header_text = header_path.read_text(encoding="utf-8")
+    blocks = _collect_comment_blocks(header_text)
+
+    md_lines: List[str] = [
+        "# FP-ASM API Reference (Autogenerated)",
+        "",
+        "> Extracted from Doxygen-style comments in `include/fp_core.h`.",
+        "",
+        "This document is generated automatically and grouped according to the",
+        "ordering found in the public header. Each section lists the relevant",
+        "C prototypes immediately followed by the descriptive comments from the",
+        "source code.",
+        "",
+    ]
+
+    for block in blocks:
+        md_lines.extend(_format_block(block))
+
+    output_path.write_text("\n".join(md_lines).strip() + "\n", encoding="utf-8")
+    return output_path
+
+
+if __name__ == "__main__":
+    target = generate_api_markdown()
+    print(f"[OK] Generated {target.relative_to(ROOT)}")

@@ -187,12 +187,12 @@ int main() {
 
 | Document | Description | Size |
 |----------|-------------|------|
-| **[API_REFERENCE.md](API_REFERENCE.md)** | Complete API docs for all 36 functions | Comprehensive |
-| **[QUICK_START.md](QUICK_START.md)** | Tutorial and progressive examples | Tutorial |
-| **[EXAMPLES.md](EXAMPLES.md)** | Complete working programs | Cookbook |
-| **[COMPLETE_LIBRARY_REPORT.md](COMPLETE_LIBRARY_REPORT.md)** | 40% → 100% journey report | Achievement |
-| **[TIER2_COMPLETENESS_REPORT.md](TIER2_COMPLETENESS_REPORT.md)** | Sorting & sets implementation | Technical |
-| **[LESSONS_LEARNED.md](LESSONS_LEARNED.md)** | When to use/avoid SIMD | Critical |
+| **[API_REFERENCE.md](docs/API_REFERENCE.md)** | Complete API docs for all 36 functions | Comprehensive |
+| **[QUICK_START.md](docs/QUICK_START.md)** | Tutorial and progressive examples | Tutorial |
+| **[EXAMPLES.md](docs/EXAMPLES.md)** | Complete working programs | Cookbook |
+| **[COMPLETE_LIBRARY_REPORT.md](docs/COMPLETE_LIBRARY_REPORT.md)** | 40% → 100% journey report | Achievement |
+| **[TIER2_COMPLETENESS_REPORT.md](docs/TIER2_COMPLETENESS_REPORT.md)** | Sorting & sets implementation | Technical |
+| **[LESSONS_LEARNED.md](docs/LESSONS_LEARNED.md)** | When to use/avoid SIMD | Critical |
 
 ---
 

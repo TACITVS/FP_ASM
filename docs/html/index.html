@@ -419,27 +419,135 @@
     </tr>
 </table>
 
-<h2>🚀 Quick Example</h2>
+<h2>🚀 Quick Start: Functional Quick Sort</h2>
 
-<pre><code>#include &lt;stdio.h&gt;
+<p>Jump straight into a full program that sorts without mutation. The example below shows how the FP-ASM quick start looks in practice when you compose <code>fp_partition_gt_i64</code>, <code>fp_concat_i64</code>, and the allocator helpers into a recursive sort pipeline.</p>
+
+<pre><code>#include &lt;inttypes.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 #include "fp_core.h"
 
-int main() {
-    // Sum an array (1.5-1.8x faster than C)
-    int64_t numbers[] = {1, 2, 3, 4, 5};
-    int64_t sum = fp_reduce_add_i64(numbers, 5);
-    printf("Sum: %lld\n", sum);  // Output: 15
+typedef struct {
+    int64_t* data;
+    size_t length;
+} FPArray;
 
-    // Find median
-    double data[] = {25.3, 19.2, 28.5, 21.8};
-    fp_sort_f64(data, 4);
-    printf("Median: %.1f\n", data[2]);
+static FPArray fp_quicksort_pure(const int64_t* input, size_t n) {
+    if (n == 0) {
+        return (FPArray){ .data = NULL, .length = 0 };
+    }
+    if (n == 1) {
+        int64_t* single = malloc(sizeof(int64_t));
+        single[0] = input[0];
+        return (FPArray){ .data = single, .length = 1 };
+    }
 
+    const int64_t pivot = input[0];
+
+    int64_t* greater = malloc(n * sizeof(int64_t));
+    int64_t* less_equal = malloc(n * sizeof(int64_t));
+    size_t greater_count = 0;
+    size_t less_equal_count = 0;
+
+    fp_partition_gt_i64(input + 1, greater, less_equal, n - 1, pivot,
+                        &greater_count, &less_equal_count);
+
+    int64_t* equals = malloc(n * sizeof(int64_t));
+    int64_t* less = malloc(n * sizeof(int64_t));
+    size_t equal_count = 1; // include the pivot itself
+    size_t less_count = 0;
+    equals[0] = pivot;
+
+    if (less_equal_count > 0) {
+        if (pivot == INT64_MIN) {
+            for (size_t i = 0; i &lt; less_equal_count; ++i) {
+                equals[equal_count++] = less_equal[i];
+            }
+        } else {
+            size_t duplicate_count = 0;
+            fp_partition_gt_i64(less_equal, equals + 1, less, less_equal_count, pivot - 1,
+                                &duplicate_count, &less_count);
+            equal_count += duplicate_count;
+        }
+    }
+    free(less_equal);
+
+    FPArray left = fp_quicksort_pure(less, less_count);
+    FPArray right = fp_quicksort_pure(greater, greater_count);
+
+    int64_t* left_with_pivot = malloc((left.length + equal_count) * sizeof(int64_t));
+    size_t left_with_pivot_len = fp_concat_i64(left.data, equals, left_with_pivot,
+                                               left.length, equal_count);
+
+    int64_t* result = malloc((left_with_pivot_len + right.length) * sizeof(int64_t));
+    size_t total_len = fp_concat_i64(left_with_pivot, right.data, result,
+                                     left_with_pivot_len, right.length);
+
+    free(left.data);
+    free(right.data);
+    free(left_with_pivot);
+    free(greater);
+    free(equals);
+    free(less);
+
+    return (FPArray){ .data = result, .length = total_len };
+}
+
+int main(void) {
+    const int64_t raw[] = { 42, -7, 13, 13, 0, 5, INT64_MIN, 9, 42 };
+    const size_t count = sizeof(raw) / sizeof(raw[0]);
+
+    FPArray sorted = fp_quicksort_pure(raw, count);
+
+    printf("Original: ");
+    for (size_t i = 0; i &lt; count; ++i) {
+        printf("%" PRId64 "%s", raw[i], (i + 1 == count) ? "\n" : ", ");
+    }
+
+    printf("Sorted:   ");
+    for (size_t i = 0; i &lt; sorted.length; ++i) {
+        printf("%" PRId64 "%s", sorted.data[i], (i + 1 == sorted.length) ? "\n" : ", ");
+    }
+
+    free(sorted.data);
     return 0;
 }
 </code></pre>
 
-<p><strong>Compile:</strong> <code>gcc your_program.c fp_core_*.o -o your_program.exe</code></p>
+<p><strong>Compile:</strong> <code>gcc your_program.c fp_core_*.o -o quick_sort.exe</code></p>
+
+<h2>🧠 Functional Quick Sort in Detail</h2>
+
+<p>This walkthrough expands on the quick start program, illustrating how to implement the classic quick sort algorithm without mutating the source data by composing FP-ASM primitives. We rely on streaming operations such as <code>fp_partition_gt_i64</code> and <code>fp_concat_i64</code> to express the recursive structure in a purely functional style.</p>
+
+<ol>
+    <li><strong>Pick a pivot</strong> without touching the original array (we simply read <code>input[0]</code>).</li>
+    <li><strong>Partition the tail</strong> into elements greater than the pivot and those less-than-or-equal using <code>fp_partition_gt_i64</code>.</li>
+    <li><strong>Isolate duplicates of the pivot</strong> with a second partition call, preserving the mathematical stability even when the pivot is <code>INT64_MIN</code>.</li>
+    <li><strong>Recursively sort</strong> the smaller sublists by returning freshly allocated arrays from each call.</li>
+    <li><strong>Concatenate the results</strong> via <code>fp_concat_i64</code> so that the final array is built from immutable pieces.</li>
+</ol>
+
+<p>All of the heavy lifting happens inside the <code>fp_quicksort_pure</code> helper showcased in the quick start program above. The listing demonstrates three core FP-ASM idioms:</p>
+
+<pre><code>// 1. Partition without mutating the source buffer
+fp_partition_gt_i64(input + 1, greater, less_equal, n - 1, pivot,
+                    &greater_count, &less_equal_count);
+
+// 2. Recursively build immutable sublists
+FPArray left = fp_quicksort_pure(less, less_count);
+FPArray right = fp_quicksort_pure(greater, greater_count);
+
+// 3. Stitch the pieces together with concat
+size_t left_with_pivot_len = fp_concat_i64(left.data, equals, left_with_pivot,
+                                           left.length, equal_count);
+size_t total_len = fp_concat_i64(left_with_pivot, right.data, result,
+                                 left_with_pivot_len, right.length);
+</code></pre>
+
+<p><strong>Key insight:</strong> every recursive call returns a brand-new array, and we only use library helpers to stitch those immutable fragments together. The original <code>raw</code> data remains untouched throughout the entire run.</p>
 
 <h2>🧠 Functional Quick Sort in Detail</h2>
 

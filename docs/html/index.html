@@ -247,6 +247,25 @@
             font-size: 1.2em;
         }
 
+        .warning {
+            background: #fff4d6;
+            border-left: 4px solid #f39c12;
+            padding: 18px 24px;
+            border-radius: 6px;
+            margin: 25px 0;
+            color: #7f4c00;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .warning strong {
+            display: block;
+            font-size: 1.1em;
+            color: #c26700;
+            margin-bottom: 6px;
+        }
+
         /* Top banner */
         .banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -356,8 +375,16 @@
             </nav>
         </aside>
         <main class="content">
-            
+
 <h1>Welcome to FP-ASM Library Documentation</h1>
+
+<div class="warning">
+    <div>⚠️</div>
+    <div>
+        <strong>In-place mutation notice</strong>
+        <p>While the FP-ASM project is centered on pure functional abstractions, a handful of helper routines still mutate state in place today. We are actively refactoring those implementations to achieve full immutability in the near future.</p>
+    </div>
+</div>
 
 <p>A complete, production-ready functional programming toolkit for C with hand-optimized x64 assembly and AVX2 SIMD acceleration.</p>
 

@@ -648,8 +648,8 @@ reused. The library's behaviour falls into three buckets:
 | Category | Functions | Notes |
 | --- | --- | --- |
 | **Always mutates** | `fp_map_axpy_i64`, `fp_map_axpy_f64`, `fp_sort_i64`, `fp_sort_f64` | These routines take an input buffer and rewrite it every time. Provide a copy if you need to preserve the original data. |
-| **Optional in-place** | `fp_map_scale_i64`, `fp_map_scale_f64`, `fp_map_offset_i64`, `fp_map_offset_f64`, `fp_map_abs_i64`, `fp_map_abs_f64`, `fp_map_clamp_i64`, `fp_map_clamp_f64`, `fp_zip_add_i64`, `fp_reverse_i64`, `fp_reverse_f64` | Passing distinct input/output pointers keeps the call pure; alias them to reuse memory and opt into mutation. |
-| **Never mutates inputs** | All other APIs (folds, scans, reductions, filters, statistics, etc.) | Their parameters are `const` or write only to caller-provided output buffers. |
+| **Optional in-place** | `fp_map_scale_i64`, `fp_map_scale_f64`, `fp_map_offset_i64`, `fp_map_offset_f64`, `fp_map_abs_i64`, `fp_map_abs_f64`, `fp_map_clamp_i64`, `fp_map_clamp_f64`, `fp_zip_add_i64` | Passing distinct input/output pointers keeps the call pure; alias them to reuse memory and opt into mutation. |
+| **Never mutates inputs** | All other APIs (folds, scans, reductions, filters, statistics, etc.) including `fp_reverse_i64` | Their parameters are `const` or write only to caller-provided output buffers. `fp_reverse_i64` requires distinct input/output buffers—aliasing them corrupts the reversal order. |
 
 **Tip:** Document your intent in code reviews—e.g. comment when aliasing inputs on
 purpose—so downstream maintainers know mutation is deliberate.

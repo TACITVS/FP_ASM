@@ -442,6 +442,20 @@ With 100% FP coverage, you can now implement:
 
 ---
 
+## 📝 GitHub Wiki Source
+
+The repository now includes Markdown pages under [`github-wiki/`](github-wiki/) that are formatted exactly how GitHub’s wiki editor expects them (e.g., `Home.md`, cross-page `[[Links]]`, etc.).
+
+To publish them through the hosted wiki interface:
+
+1. Clone the wiki repository: `git clone https://github.com/TACITVS/FP_ASM.wiki.git`
+2. Run `scripts/publish_wiki.sh /path/to/FP_ASM.wiki` to sync the prepared Markdown files.
+3. From the cloned wiki repository, push to GitHub with `git push`.
+
+After the push, the live wiki at <https://github.com/TACITVS/FP_ASM/wiki> will reflect the same content you would enter through the `/_new` page.
+
+---
+
 ## 📄 License
 
 [Specify your license here]

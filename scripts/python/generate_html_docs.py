@@ -14,6 +14,8 @@ Output:
 import re
 import os
 import sys
+import shutil
+from datetime import datetime
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -372,7 +374,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <nav>
                 <ul>
                     <li><a href="index.html" class="{active_index}">🏠 Home</a></li>
-                    <li><a href="README.html" class="{active_readme}">📖 Overview</a></li>
+                    <li><a href="README.html" class="{active_readme}">📄 Overview</a></li>
+                    <li><a href="wiki/index.html" class="{active_wiki}">📖 Wiki</a></li>
                     <li><a href="QUICK_START.html" class="{active_quick}">🚀 Quick Start</a></li>
                     <li><a href="EXAMPLES.html" class="{active_examples}">🧪 Practical Examples</a></li>
                     <li><a href="API_REFERENCE.html" class="{active_api}">📘 API Reference <span class="badge">36 funcs</span></a></li>
@@ -387,6 +390,246 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </aside>
         <main class="content">
             {content}
+        </main>
+    </div>
+</body>
+</html>
+"""
+
+WIKI_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} · FP-ASM Wiki</title>
+    <style>
+        body {{
+            font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f6f6f6;
+            color: #202122;
+        }}
+
+        a {{
+            color: #0645ad;
+            text-decoration: none;
+        }}
+
+        a:hover {{
+            text-decoration: underline;
+        }}
+
+        header {{
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }}
+
+        header .title {{
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #202122;
+        }}
+
+        header nav a {{
+            margin-left: 18px;
+            font-size: 0.95em;
+            color: #3366cc;
+        }}
+
+        .page {{
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            gap: 28px;
+        }}
+
+        .sidebar {{
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 18px;
+            height: fit-content;
+        }}
+
+        .sidebar h2 {{
+            font-size: 1.1em;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+        }}
+
+        .sidebar ul {{
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }}
+
+        .sidebar li {{
+            margin: 6px 0;
+        }}
+
+        .sidebar a {{
+            display: block;
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: #0645ad;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.95em;
+        }}
+
+        .sidebar a.active {{
+            background: #eaf3ff;
+            font-weight: bold;
+            border: 1px solid #a2a9b1;
+        }}
+
+        .article {{
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 24px 32px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }}
+
+        .article h1 {{
+            font-size: 2.3em;
+            margin-top: 0;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 8px;
+            font-family: 'Linux Libertine', 'Georgia', serif;
+        }}
+
+        .article h2 {{
+            font-size: 1.6em;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-top: 32px;
+        }}
+
+        .article h3 {{
+            font-size: 1.3em;
+            margin-top: 24px;
+            border-bottom: 1px dotted #c8ccd1;
+            padding-bottom: 3px;
+        }}
+
+        .article p {{
+            margin: 14px 0;
+            line-height: 1.7;
+        }}
+
+        .article ul, .article ol {{
+            margin: 12px 0 12px 24px;
+        }}
+
+        .article li {{
+            margin: 6px 0;
+        }}
+
+        .article pre {{
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }}
+
+        .article code {{
+            background: #f1f2f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }}
+
+        table {{
+            border-collapse: collapse;
+            width: 100%;
+            margin: 18px 0;
+            background: #ffffff;
+        }}
+
+        th, td {{
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            text-align: left;
+        }}
+
+        th {{
+            background: #eaecf0;
+        }}
+
+        .infobox {{
+            float: right;
+            width: 320px;
+            margin: 0 0 18px 24px;
+            font-size: 0.9em;
+            background: #f8f9fa;
+        }}
+
+        .article blockquote {{
+            border-left: 3px solid #a2a9b1;
+            margin: 18px 0;
+            padding: 10px 18px;
+            background: #f8f9fa;
+            font-style: italic;
+        }}
+
+        .footer-note {{
+            margin-top: 36px;
+            font-size: 0.85em;
+            color: #54595d;
+            border-top: 1px solid #a2a9b1;
+            padding-top: 12px;
+        }}
+
+        @media (max-width: 992px) {{
+            .page {{
+                flex-direction: column;
+            }}
+
+            .sidebar {{
+                width: 100%;
+            }}
+
+            .infobox {{
+                float: none;
+                width: 100%;
+                margin: 0 0 18px 0;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">📖 FP-ASM Knowledge Base</div>
+        <nav>
+            <a href="../index.html">Documentation Home</a>
+            <a href="../README.html">Overview</a>
+            <a href="../API_REFERENCE.html">API Reference</a>
+        </nav>
+    </header>
+    <div class="page">
+        <aside class="sidebar">
+            <h2>Wiki Pages</h2>
+            <ul>
+                {sidebar}
+            </ul>
+        </aside>
+        <main class="article">
+            <h1>{title}</h1>
+            {content}
+            <div class="footer-note">This article was generated on {generated_on}.</div>
         </main>
     </div>
 </body>
@@ -485,6 +728,95 @@ def convert_markdown_to_html(markdown_text):
     html = re.sub(emoji_pattern, r'<span class="emoji">\1</span>', html)
 
     return html
+
+def slugify(title: str) -> str:
+    """Convert a wiki page title into a filesystem-friendly slug."""
+    slug = re.sub(r'[^A-Za-z0-9]+', '-', title.strip())
+    slug = re.sub(r'-{2,}', '-', slug)
+    slug = slug.strip('-')
+    return slug or 'page'
+
+def generate_wiki_pages():
+    """Generate a Wikipedia-style site from the github-wiki markdown files."""
+    wiki_source = BASE_DIR / 'github-wiki'
+    if not wiki_source.exists():
+        print(f"[WARN] Skipping wiki generation (missing directory: {wiki_source})")
+        return 0
+
+    wiki_files = sorted(
+        wiki_source.glob('*.md'),
+        key=lambda path: (0 if path.stem.lower() == 'home' else 1, path.stem.lower()),
+    )
+
+    if not wiki_files:
+        print(f"[WARN] No markdown files found in {wiki_source}, skipping wiki generation")
+        return 0
+
+    wiki_output = OUTPUT_DIR / 'wiki'
+    if wiki_output.exists():
+        shutil.rmtree(wiki_output)
+    wiki_output.mkdir(parents=True, exist_ok=True)
+
+    pages = []
+    for path in wiki_files:
+        title = path.stem
+        slug = slugify(title)
+        pages.append({'title': title, 'slug': slug, 'path': path})
+
+    title_to_slug = {}
+    for page in pages:
+        title_to_slug[page['title']] = page['slug']
+        title_to_slug[page['title'].lower()] = page['slug']
+
+    print(f"[*] Generating wiki HTML ({len(pages)} pages)...")
+    generated = 0
+
+    for page in pages:
+        with open(page['path'], 'r', encoding='utf-8') as f:
+            markdown = f.read()
+
+        def replace_wiki_links(match):
+            label = match.group(1).strip()
+            slug = title_to_slug.get(label) or title_to_slug.get(label.lower()) or slugify(label)
+            return f'[{label}]({slug}.html)'
+
+        markdown = re.sub(r'\[\[([^\]]+)\]\]', replace_wiki_links, markdown)
+
+        html_content = convert_markdown_to_html(markdown)
+        # Drop the leading H1 because the template provides the page title headline
+        html_content = re.sub(r'^<h1>.*?</h1>\n?', '', html_content, count=1, flags=re.DOTALL)
+
+        sidebar_items = []
+        for item in pages:
+            css_class = 'active' if item['slug'] == page['slug'] else ''
+            sidebar_items.append(
+                f'<li><a class="{css_class}" href="{item["slug"]}.html">{item["title"]}</a></li>'
+            )
+
+        sidebar_html = '\n'.join(sidebar_items)
+        generated_on = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+
+        final_html = WIKI_TEMPLATE.format(
+            title=page['title'],
+            content=html_content,
+            sidebar=sidebar_html,
+            generated_on=generated_on,
+        )
+
+        output_path = wiki_output / f"{page['slug']}.html"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+
+        print(f"    [OK] {page['title']} -> {output_path.relative_to(BASE_DIR)}")
+        generated += 1
+
+    # Duplicate the Home page to index.html for convenience
+    home_page = next((p for p in pages if p['slug'].lower() == 'home'), pages[0])
+    home_html = wiki_output / f"{home_page['slug']}.html"
+    shutil.copyfile(home_html, wiki_output / 'index.html')
+    print(f"    [OK] index.html -> wiki/{home_page['slug']}.html")
+
+    return generated + 1  # include index.html copy
 
 def create_index_page():
     """Create the main index page."""
@@ -657,6 +989,7 @@ def generate_html_docs():
         active_flags = {
             'active_index': '',
             'active_readme': '',
+            'active_wiki': '',
             'active_quick': '',
             'active_examples': '',
             'active_api': '',
@@ -724,6 +1057,7 @@ def generate_html_docs():
         content=index_content,
         active_index='active',
         active_readme='',
+        active_wiki='',
         active_quick='',
         active_examples='',
         active_api='',
@@ -738,8 +1072,13 @@ def generate_html_docs():
         f.write(index_html)
     print("[OK]")
 
+    wiki_generated = generate_wiki_pages()
+    if wiki_generated:
+        print(f"[OK] Generated wiki site with {wiki_generated} HTML files")
+
     print("\n" + "=" * 60)
-    print(f"[SUCCESS] Generated {converted + 1} HTML pages!")
+    total_pages = converted + 1 + wiki_generated
+    print(f"[SUCCESS] Generated {converted + 1} documentation pages and {wiki_generated} wiki pages ({total_pages} total)!")
     print(f"[DIR] Output directory: {output_dir.absolute()}")
     print(f"\n[BROWSER] Open: file:///{output_dir.absolute()}/index.html")
     print("=" * 60)

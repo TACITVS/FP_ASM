@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home · FP-ASM Wiki</title>
+    <style>
+        body {
+            font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f6f6f6;
+            color: #202122;
+        }
+
+        a {
+            color: #0645ad;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #202122;
+        }
+
+        header nav a {
+            margin-left: 18px;
+            font-size: 0.95em;
+            color: #3366cc;
+        }
+
+        .page {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            gap: 28px;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 18px;
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1em;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin: 6px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: #0645ad;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.95em;
+        }
+
+        .sidebar a.active {
+            background: #eaf3ff;
+            font-weight: bold;
+            border: 1px solid #a2a9b1;
+        }
+
+        .article {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 24px 32px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .article h1 {
+            font-size: 2.3em;
+            margin-top: 0;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 8px;
+            font-family: 'Linux Libertine', 'Georgia', serif;
+        }
+
+        .article h2 {
+            font-size: 1.6em;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-top: 32px;
+        }
+
+        .article h3 {
+            font-size: 1.3em;
+            margin-top: 24px;
+            border-bottom: 1px dotted #c8ccd1;
+            padding-bottom: 3px;
+        }
+
+        .article p {
+            margin: 14px 0;
+            line-height: 1.7;
+        }
+
+        .article ul, .article ol {
+            margin: 12px 0 12px 24px;
+        }
+
+        .article li {
+            margin: 6px 0;
+        }
+
+        .article pre {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .article code {
+            background: #f1f2f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 18px 0;
+            background: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #eaecf0;
+        }
+
+        .infobox {
+            float: right;
+            width: 320px;
+            margin: 0 0 18px 24px;
+            font-size: 0.9em;
+            background: #f8f9fa;
+        }
+
+        .article blockquote {
+            border-left: 3px solid #a2a9b1;
+            margin: 18px 0;
+            padding: 10px 18px;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+
+        .footer-note {
+            margin-top: 36px;
+            font-size: 0.85em;
+            color: #54595d;
+            border-top: 1px solid #a2a9b1;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 18px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">📖 FP-ASM Knowledge Base</div>
+        <nav>
+            <a href="../index.html">Documentation Home</a>
+            <a href="../README.html">Overview</a>
+            <a href="../API_REFERENCE.html">API Reference</a>
+        </nav>
+    </header>
+    <div class="page">
+        <aside class="sidebar">
+            <h2>Wiki Pages</h2>
+            <ul>
+                <li><a class="active" href="Home.html">Home</a></li>
+<li><a class="" href="API-Advanced-Algorithms.html">API – Advanced Algorithms</a></li>
+<li><a class="" href="API-Core-Modules.html">API – Core Modules</a></li>
+<li><a class="" href="Generic-Functional-Interface.html">Generic Functional Interface</a></li>
+<li><a class="" href="Publishing-Tips.html">Publishing Tips</a></li>
+<li><a class="" href="Roadmap.html">Roadmap</a></li>
+            </ul>
+        </aside>
+        <main class="article">
+            <h1>Home</h1>
+            
+Welcome to the FP-ASM wiki. This site mirrors what you would create through GitHub's own wiki editor at https://github.com/TACITVS/FP_ASM/wiki/_new. Use the sidebar or the quick links below to explore every functional kernel, roadmap milestone, and publishing tip.
+
+<ul><li><a href="API-Core-Modules.html">API – Core Modules</a></li>
+<li><a href="API-Advanced-Algorithms.html">API – Advanced Algorithms</a></li>
+<li><a href="Generic-Functional-Interface.html">Generic Functional Interface</a></li>
+<li><a href="Roadmap.html">Roadmap</a></li>
+<li><a href="Publishing-Tips.html">Publishing Tips</a></li></ul>
+
+<h2>Overview</h2>
+
+FP-ASM is a production-grade functional-programming toolkit for C, implemented in hand-optimized x86-64 assembly with AVX2 acceleration. The current distribution targets the Microsoft x64 calling convention; a System V port is planned next.
+
+<h2>Key Features</h2>
+
+* Coverage of 36 functional-programming staples (map, fold, filter, group, unfold, etc.)
+* 1.0–4.0× speedups against GCC <code>-O3</code> via fused kernels and SIMD code generation
+* Zero external dependencies—include the supplied headers and link the objects
+* Distinct entry points for <code>int64_t</code> and <code>double</code> primitives
+
+<h2>Quick Start</h2>
+
+<pre><code>#include <stdio.h>
+#include "fp_core.h"
+
+int main(void) {
+    int64_t numbers[] = {1, 2, 3, 4, 5};
+    int64_t sum = fp_reduce_add_i64(numbers, 5);
+    printf("Sum: %lld\n", sum);
+
+    double data[] = {25.3, 19.2, 28.5, 21.8};
+    fp_sort_f64(data, 4);
+    printf("Median: %.1f\n", data[2]);
+
+    int64_t input[] = {1, 1, 2, 2, 2, 3};
+    int64_t groups[6], counts[6];
+    size_t ng = fp_group_i64(input, groups, counts, 6);
+
+    int64_t checks[] = {1, 5, -3, 10};
+    bool all_pos = fp_reduce_and_bool(checks, 4);
+
+    return 0;
+}
+</code></pre>
+
+Compile with:
+
+<pre><code>gcc your_program.c fp_core_*.o -o your_program.exe
+</code></pre>
+
+<h2>Repository Layout</h2>
+
+* <code>bin/</code> – demo, benchmark, and regression executables
+* <code>build/obj/</code> – NASM outputs ready for linking
+* <code>docs/</code> – user guides, API deep dives, verification reports, and generated HTML
+* <code>include/</code> – public headers (<code>fp_core.h</code>, <code>fp.h</code>)
+* <code>logs/</code>, <code>scripts/</code>, <code>src/asm/</code>, <code>src/c/</code> – build tooling, sources, and tests
+
+<h2>Performance Snapshot</h2>
+
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Operations</td><td>36</td></tr>
+<tr><td>Assembly modules</td><td>10 (~4,800 LOC)</td></tr>
+<tr><td>Object size</td><td>~27 KB</td></tr>
+<tr><td>FP completeness</td><td>100 %</td></tr>
+<tr><td>Speedup vs GCC <code>-O3</code></td><td>1.0–4.0×</td></tr>
+<tr><td>Types</td><td><code>int64_t</code>, <code>double</code></td></tr>
+<tr><td>ISA</td><td>AVX2</td></tr>
+</table>
+<h2>Next Steps</h2>
+
+Jump to <a href="Roadmap.html">Roadmap</a> for milestone planning or <a href="Publishing-Tips.html">Publishing Tips</a> if you are ready to synchronize this content to GitHub's hosted wiki.
+
+            <div class="footer-note">This article was generated on 2025-11-01 15:46 UTC.</div>
+        </main>
+    </div>
+</body>
+</html>

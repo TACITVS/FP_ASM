@@ -342,7 +342,8 @@
             <nav>
                 <ul>
                     <li><a href="index.html" class="">🏠 Home</a></li>
-                    <li><a href="README.html" class="active">📖 Overview</a></li>
+                    <li><a href="README.html" class="active">📄 Overview</a></li>
+                    <li><a href="wiki/index.html" class="">📖 Wiki</a></li>
                     <li><a href="QUICK_START.html" class="">🚀 Quick Start</a></li>
                     <li><a href="EXAMPLES.html" class="">🧪 Practical Examples</a></li>
                     <li><a href="API_REFERENCE.html" class="">📘 API Reference <span class="badge">36 funcs</span></a></li>
@@ -366,6 +367,8 @@
 <a href="https://img.shields.io/badge/ISA-AVX2-red">![ISA</a>]()
 
 <strong>A complete, production-ready functional programming toolkit for C with hand-optimized x64 assembly and AVX2 SIMD acceleration. 100% FP coverage achieved!</strong>
+
+> <span class="emoji">⚠</span>️ <strong>Platform Availability</strong>: During this phase FP-ASM ships <strong>Windows x64-only</strong> builds because our assembly kernels assume the Microsoft calling convention. Linux support will arrive once we complete the port to the System V ABI in the next phase.
 
 <hr>
 
@@ -507,7 +510,7 @@ int main() {
 <li><code>fp_run_length_encode_i64</code> - RLE compression</li>
 <li><code>fp_iterate_add_i64</code> - Arithmetic sequences</li>
 <li><code>fp_iterate_mul_i64</code> - Geometric sequences</li>
-<li><code>fp_range_i64</code> - Range <a href="API_REFERENCE.html">start..end)</li>
+<li><code>fp_range_i64</code> - Range <a href="docs/API_REFERENCE.html">start..end)</li>
 <li><code>fp_reduce_and_bool</code> - Logical AND (2.0-4.0x)</li>
 <li><code>fp_reduce_or_bool</code> - Logical OR (2.0-4.0x)</li>
 <li><code>fp_zip_with_index_i64</code> - Pair with indices</li>
@@ -543,11 +546,11 @@ int main() {
 <table>
 <tr><th>Document</th><th>Description</th><th>Size</th></tr>
 <tr><td><strong>[API_REFERENCE.md</a></strong></td><td>Complete API docs for all 36 functions</td><td>Comprehensive</td></tr>
-<tr><td><strong><a href="QUICK_START.html">QUICK_START.md</a></strong></td><td>Tutorial and progressive examples</td><td>Tutorial</td></tr>
-<tr><td><strong><a href="EXAMPLES.html">EXAMPLES.md</a></strong></td><td>Complete working programs</td><td>Cookbook</td></tr>
-<tr><td><strong><a href="COMPLETE_LIBRARY_REPORT.html">COMPLETE_LIBRARY_REPORT.md</a></strong></td><td>40% → 100% journey report</td><td>Achievement</td></tr>
-<tr><td><strong><a href="TIER2_COMPLETENESS_REPORT.html">TIER2_COMPLETENESS_REPORT.md</a></strong></td><td>Sorting & sets implementation</td><td>Technical</td></tr>
-<tr><td><strong><a href="LESSONS_LEARNED.html">LESSONS_LEARNED.md</a></strong></td><td>When to use/avoid SIMD</td><td>Critical</td></tr>
+<tr><td><strong><a href="docs/QUICK_START.html">QUICK_START.md</a></strong></td><td>Tutorial and progressive examples</td><td>Tutorial</td></tr>
+<tr><td><strong><a href="docs/EXAMPLES.html">EXAMPLES.md</a></strong></td><td>Complete working programs</td><td>Cookbook</td></tr>
+<tr><td><strong><a href="docs/COMPLETE_LIBRARY_REPORT.html">COMPLETE_LIBRARY_REPORT.md</a></strong></td><td>40% → 100% journey report</td><td>Achievement</td></tr>
+<tr><td><strong><a href="docs/TIER2_COMPLETENESS_REPORT.html">TIER2_COMPLETENESS_REPORT.md</a></strong></td><td>Sorting & sets implementation</td><td>Technical</td></tr>
+<tr><td><strong><a href="docs/LESSONS_LEARNED.html">LESSONS_LEARNED.md</a></strong></td><td>When to use/avoid SIMD</td><td>Critical</td></tr>
 </table>
 <hr>
 
@@ -786,6 +789,20 @@ With 100% FP coverage, you can now implement:
 <span class="emoji">✅</span> <strong>Machine Learning</strong> - clustering, normalization
 <span class="emoji">✅</span> <strong>Financial Calculations</strong> - moving averages, returns
 <span class="emoji">✅</span> <strong>Game Development</strong> - collision detection, particle systems
+
+<hr>
+
+<h2><span class="emoji">📝</span> GitHub Wiki Source</h2>
+
+The repository now includes Markdown pages under <a href="github-wiki/"><code>github-wiki/</code></a> that are formatted exactly how GitHub’s wiki editor expects them (e.g., <code>Home.md</code>, cross-page <code>[[Links]]</code>, etc.).
+
+To publish them through the hosted wiki interface:
+
+<li>Clone the wiki repository: <code>git clone https://github.com/TACITVS/FP_ASM.wiki.git</code></li>
+<li>Run <code>scripts/publish_wiki.sh /path/to/FP_ASM.wiki</code> to sync the prepared Markdown files.</li>
+<li>From the cloned wiki repository, push to GitHub with <code>git push</code>.</li>
+
+After the push, the live wiki at <https://github.com/TACITVS/FP_ASM/wiki> will reflect the same content you would enter through the <code>/_new</code> page.
 
 <hr>
 

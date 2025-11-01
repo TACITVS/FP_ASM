@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API – Core Modules · FP-ASM Wiki</title>
+    <style>
+        body {
+            font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f6f6f6;
+            color: #202122;
+        }
+
+        a {
+            color: #0645ad;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #202122;
+        }
+
+        header nav a {
+            margin-left: 18px;
+            font-size: 0.95em;
+            color: #3366cc;
+        }
+
+        .page {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            gap: 28px;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 18px;
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1em;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin: 6px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: #0645ad;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.95em;
+        }
+
+        .sidebar a.active {
+            background: #eaf3ff;
+            font-weight: bold;
+            border: 1px solid #a2a9b1;
+        }
+
+        .article {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 24px 32px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .article h1 {
+            font-size: 2.3em;
+            margin-top: 0;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 8px;
+            font-family: 'Linux Libertine', 'Georgia', serif;
+        }
+
+        .article h2 {
+            font-size: 1.6em;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-top: 32px;
+        }
+
+        .article h3 {
+            font-size: 1.3em;
+            margin-top: 24px;
+            border-bottom: 1px dotted #c8ccd1;
+            padding-bottom: 3px;
+        }
+
+        .article p {
+            margin: 14px 0;
+            line-height: 1.7;
+        }
+
+        .article ul, .article ol {
+            margin: 12px 0 12px 24px;
+        }
+
+        .article li {
+            margin: 6px 0;
+        }
+
+        .article pre {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .article code {
+            background: #f1f2f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 18px 0;
+            background: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #eaecf0;
+        }
+
+        .infobox {
+            float: right;
+            width: 320px;
+            margin: 0 0 18px 24px;
+            font-size: 0.9em;
+            background: #f8f9fa;
+        }
+
+        .article blockquote {
+            border-left: 3px solid #a2a9b1;
+            margin: 18px 0;
+            padding: 10px 18px;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+
+        .footer-note {
+            margin-top: 36px;
+            font-size: 0.85em;
+            color: #54595d;
+            border-top: 1px solid #a2a9b1;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 18px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">📖 FP-ASM Knowledge Base</div>
+        <nav>
+            <a href="../index.html">Documentation Home</a>
+            <a href="../README.html">Overview</a>
+            <a href="../API_REFERENCE.html">API Reference</a>
+        </nav>
+    </header>
+    <div class="page">
+        <aside class="sidebar">
+            <h2>Wiki Pages</h2>
+            <ul>
+                <li><a class="" href="Home.html">Home</a></li>
+<li><a class="" href="API-Advanced-Algorithms.html">API – Advanced Algorithms</a></li>
+<li><a class="active" href="API-Core-Modules.html">API – Core Modules</a></li>
+<li><a class="" href="Generic-Functional-Interface.html">Generic Functional Interface</a></li>
+<li><a class="" href="Publishing-Tips.html">Publishing Tips</a></li>
+<li><a class="" href="Roadmap.html">Roadmap</a></li>
+            </ul>
+        </aside>
+        <main class="article">
+            <h1>API – Core Modules</h1>
+            
+Return to <a href="Home.html">Home</a> or explore <a href="API-Advanced-Algorithms.html">API – Advanced Algorithms</a>.
+
+Each module groups related functional kernels. All routines follow the Microsoft x64 calling convention and export C-friendly symbols.
+
+<h2>Category 1 – Simple Folds (Module 1)</h2>
+
+<ul><li><code>fp_reduce_add_i64(const int64_t* in, size_t n)</code> sums <code>n</code> signed 64-bit integers and returns the total.</li>
+<li><code>fp_reduce_add_f64(const double* in, size_t n)</code> sums <code>n</code> doubles with AVX2 reduction.</li>
+<li><code>fp_reduce_max_i64(const int64_t* in, size_t n)</code> returns the maximum integer found in the input span.</li>
+<li><code>fp_reduce_max_f64(const double* in, size_t n)</code> returns the maximum double in the buffer.</li>
+
+<h2>Category 2 – Fused Folds (Module 2)</h2>
+
+<li><code>fp_fold_sumsq_i64(const int64_t* in, size_t n)</code> fuses squaring with accumulation to produce a sum of squares in one pass.</li>
+<li><code>fp_fold_dotp_i64(const int64_t<em> a, const int64_t</em> b, size_t n)</code> multiplies and accumulates integer pairs for a dot product.</li>
+<li><code>fp_fold_dotp_f64(const double<em> a, const double</em> b, size_t n)</code> is the floating-point dot product using FMA on AVX2 hardware.</li>
+<li><code>fp_fold_sad_i64(const int64_t<em> a, const int64_t</em> b, size_t n)</code> sums absolute differences between two integer arrays.</li>
+
+<h2>Category 3 – Fused Maps (Module 3)</h2>
+
+<li><code>fp_map_axpy_f64(const double<em> x, const double</em> y, double<em> out, size_t n, double c)</code> evaluates <code>out[i] = c </em> x[i] + y[i]</code> with AVX2 FMA.</li>
+<li><code>fp_map_axpy_i64(const int64_t<em> x, const int64_t</em> y, int64_t* out, size_t n, int64_t c)</code> performs the integer AXPY analogue with scalar unrolling.</li>
+<li><code>fp_map_scale_i64(const int64_t<em> in, int64_t</em> out, size_t n, int64_t c)</code> multiplies each integer by <code>c</code> using unrolled scalar loops.</li>
+<li><code>fp_map_scale_f64(const double<em> in, double</em> out, size_t n, double c)</code> scales doubles with guaranteed SIMD coverage.</li>
+<li><code>fp_map_offset_i64(const int64_t<em> in, int64_t</em> out, size_t n, int64_t c)</code> adds a constant to each integer element.</li>
+<li><code>fp_map_offset_f64(const double<em> in, double</em> out, size_t n, double c)</code> adds <code>c</code> to each double in SIMD lanes.</li>
+<li><code>fp_zip_add_i64(const int64_t<em> a, const int64_t</em> b, int64_t* out, size_t n)</code> sums two integer arrays element-wise.</li>
+<li><code>fp_zip_add_f64(const double<em> a, const double</em> b, double* out, size_t n)</code> performs the floating-point zip-and-add variant.</li>
+
+<h2>Category 4 – Simple Maps (Module 4)</h2>
+
+<li><code>fp_map_abs_i64(const int64_t<em> in, int64_t</em> out, size_t n)</code> writes absolute values using bit tricks for integers.</li>
+<li><code>fp_map_abs_f64(const double<em> in, double</em> out, size_t n)</code> applies absolute-value masks to doubles.</li>
+<li><code>fp_map_sqrt_f64(const double<em> in, double</em> out, size_t n)</code> computes vectorized square roots for each element.</li>
+<li><code>fp_map_clamp_i64(const int64_t<em> in, int64_t</em> out, size_t n, int64_t min_val, int64_t max_val)</code> clamps integers to <code>[min_val, max_val]</code> via scalar logic.</li>
+<li><code>fp_map_clamp_f64(const double<em> in, double</em> out, size_t n, double min_val, double max_val)</code> clamps doubles with SIMD compare/min/max sequences.</li>
+
+<h2>Category 5 – Scans (Module 5)</h2>
+
+<li><code>fp_scan_add_i64(const int64_t<em> in, int64_t</em> out, size_t n)</code> emits the inclusive prefix sum over integers with unrolled scalar loops.</li>
+<li><code>fp_scan_add_f64(const double<em> in, double</em> out, size_t n)</code> produces the inclusive prefix sum of doubles.</li>
+
+<h2>Category 6 – Predicates (Module 6)</h2>
+
+<li><code>fp_pred_all_eq_const_i64(const int64_t* arr, size_t n, int64_t value)</code> returns <code>true</code> only if every entry equals <code>value</code>.</li>
+<li><code>fp_pred_any_gt_const_i64(const int64_t* arr, size_t n, int64_t value)</code> flags whether any element exceeds the threshold.</li>
+<li><code>fp_pred_all_gt_zip_i64(const int64_t<em> a, const int64_t</em> b, size_t n)</code> requires all <code>a[i] > b[i]</code> comparisons to pass.</li>
+
+<h2>Category 7 – Stream Compaction (Module 7)</h2>
+
+<li><code>fp_filter_gt_i64_simple(const int64_t<em> input, int64_t</em> output, size_t n, int64_t threshold)</code> copies values greater than <code>threshold</code> and returns the count emitted.</li>
+<li><code>fp_partition_gt_i64(const int64_t<em> input, int64_t</em> output_pass, int64_t<em> output_fail, size_t n, int64_t threshold, size_t</em> out_pass_count, size_t* out_fail_count)</code> splits elements into “pass” and “fail” buffers and records their sizes.</li>
+<li><code>fp_take_while_gt_i64(const int64_t<em> input, int64_t</em> output, size_t n, int64_t threshold)</code> copies prefix elements while the predicate holds, stopping at the first miss.</li>
+<li><code>fp_drop_while_gt_i64(const int64_t<em> input, int64_t</em> output, size_t n, int64_t threshold)</code> skips the leading run satisfying the predicate and emits the remainder.</li>
+
+<h2>Category 8 – Essential Operations (Module 8)</h2>
+
+<h3>Index-Based</h3>
+
+<li><code>fp_take_n_i64(const int64_t<em> input, int64_t</em> output, size_t array_len, size_t take_count)</code> copies the first <code>take_count</code> items (bounded by <code>array_len</code>) and returns how many were written.</li>
+<li><code>fp_drop_n_i64(const int64_t<em> input, int64_t</em> output, size_t array_len, size_t drop_count)</code> skips <code>drop_count</code> entries and packs the remainder, returning the output length.</li>
+<li><code>fp_slice_i64(const int64_t<em> input, int64_t</em> output, size_t array_len, size_t start, size_t end)</code> copies the half-open range <code>[start, end)</code> and reports its length.</li>
+
+<h3>Additional Reductions</h3>
+
+<li><code>fp_reduce_product_i64(const int64_t* input, size_t n)</code> multiplies all integers (returns <code>1</code> for empty inputs).</li>
+<li><code>fp_reduce_product_f64(const double* input, size_t n)</code> multiplies all doubles analogously.</li>
+
+<h3>Search</h3>
+
+<li><code>fp_find_index_i64(const int64_t* input, size_t n, int64_t target)</code> returns the index of the first match or <code>-1</code> if absent.</li>
+<li><code>fp_contains_i64(const int64_t* input, size_t n, int64_t target)</code> reports whether <code>target</code> exists (<code>true</code>) or not (<code>false</code>).</li>
+
+<h3>Array Manipulation</h3>
+
+<li><code>fp_reverse_i64(const int64_t<em> input, int64_t</em> output, size_t n)</code> reverses the array into <code>output</code>.</li>
+<li><code>fp_concat_i64(const int64_t<em> input_a, const int64_t</em> input_b, int64_t* output, size_t len_a, size_t len_b)</code> concatenates two inputs and returns the combined length.</li>
+<li><code>fp_replicate_i64(int64_t* output, size_t n, int64_t value)</code> fills <code>output</code> with <code>value</code> repeated <code>n</code> times.</li>
+
+<h2>Category 9 – Tier 2 (Module 9)</h2>
+
+<li><code>fp_sort_i64(int64_t* array, size_t n)</code> sorts integers in place using a tuned quicksort/insertion hybrid.</li>
+<li><code>fp_sort_f64(double* array, size_t n)</code> sorts doubles in place with the same strategy.</li>
+<li><code>fp_unique_i64(const int64_t<em> input, int64_t</em> output, size_t n)</code> removes consecutive duplicates (expects sorted input) and returns the unique count.</li>
+<li><code>fp_union_i64(const int64_t<em> array_a, const int64_t</em> array_b, int64_t* output, size_t len_a, size_t len_b)</code> merges two sorted sets to form their union, returning its size.</li>
+<li><code>fp_intersect_i64(const int64_t<em> array_a, const int64_t</em> array_b, int64_t* output, size_t len_a, size_t len_b)</code> computes the intersection of sorted inputs, returning the number of matches.</li>
+
+<h2>Category 10 – Tier 3 (Module 10)</h2>
+
+<h3>Grouping & Encoding</h3>
+
+<li><code>fp_group_i64(const int64_t<em> input, int64_t</em> groups_out, int64_t* counts_out, size_t n)</code> groups consecutive equal values, filling parallel arrays and returning the number of groups.</li>
+<li><code>fp_run_length_encode_i64(const int64_t<em> input, int64_t</em> output, size_t n)</code> emits <code>[value, count]</code> pairs for each run and returns twice the group count.</li>
+
+<h3>Sequence Generation</h3>
+
+<li><code>fp_iterate_add_i64(int64_t* output, size_t n, int64_t start, int64_t step)</code> creates an arithmetic progression of length <code>n</code>.</li>
+<li><code>fp_iterate_mul_i64(int64_t* output, size_t n, int64_t start, int64_t factor)</code> builds a geometric progression.</li>
+<li><code>fp_range_i64(int64_t* output, int64_t start, int64_t end)</code> writes the range <code>[start, end)</code> and returns the number of elements.</li>
+
+<h3>Boolean Reductions & Utilities</h3>
+
+<li><code>fp_reduce_and_bool(const int64_t* input, size_t n)</code> tests whether every value is non-zero (logical AND).</li>
+<li><code>fp_reduce_or_bool(const int64_t* input, size_t n)</code> tests whether any value is non-zero (logical OR).</li>
+<li><code>fp_zip_with_index_i64(const int64_t<em> input, int64_t</em> output, size_t n)</code> interleaves indices with values (<code>[0, x0, 1, x1, …]</code>) and returns the output length <code>2n</code>.</li>
+<li><code>fp_replicate_f64(double* output, size_t n, double value)</code> broadcasts <code>value</code> across <code>n</code> doubles.</li>
+<li><code>fp_count_i64(const int64_t* input, size_t n, int64_t target)</code> counts how many entries equal <code>target</code>.</li></ul>
+
+Looking for higher-order helpers? Visit <a href="Generic-Functional-Interface.html">Generic Functional Interface</a>.
+
+            <div class="footer-note">This article was generated on 2025-11-01 15:46 UTC.</div>
+        </main>
+    </div>
+</body>
+</html>

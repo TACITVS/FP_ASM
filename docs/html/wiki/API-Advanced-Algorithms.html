@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API – Advanced Algorithms · FP-ASM Wiki</title>
+    <style>
+        body {
+            font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f6f6f6;
+            color: #202122;
+        }
+
+        a {
+            color: #0645ad;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #202122;
+        }
+
+        header nav a {
+            margin-left: 18px;
+            font-size: 0.95em;
+            color: #3366cc;
+        }
+
+        .page {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            gap: 28px;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 18px;
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1em;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin: 6px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: #0645ad;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.95em;
+        }
+
+        .sidebar a.active {
+            background: #eaf3ff;
+            font-weight: bold;
+            border: 1px solid #a2a9b1;
+        }
+
+        .article {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #a2a9b1;
+            border-radius: 4px;
+            padding: 24px 32px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .article h1 {
+            font-size: 2.3em;
+            margin-top: 0;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 8px;
+            font-family: 'Linux Libertine', 'Georgia', serif;
+        }
+
+        .article h2 {
+            font-size: 1.6em;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-top: 32px;
+        }
+
+        .article h3 {
+            font-size: 1.3em;
+            margin-top: 24px;
+            border-bottom: 1px dotted #c8ccd1;
+            padding-bottom: 3px;
+        }
+
+        .article p {
+            margin: 14px 0;
+            line-height: 1.7;
+        }
+
+        .article ul, .article ol {
+            margin: 12px 0 12px 24px;
+        }
+
+        .article li {
+            margin: 6px 0;
+        }
+
+        .article pre {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .article code {
+            background: #f1f2f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 18px 0;
+            background: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #eaecf0;
+        }
+
+        .infobox {
+            float: right;
+            width: 320px;
+            margin: 0 0 18px 24px;
+            font-size: 0.9em;
+            background: #f8f9fa;
+        }
+
+        .article blockquote {
+            border-left: 3px solid #a2a9b1;
+            margin: 18px 0;
+            padding: 10px 18px;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+
+        .footer-note {
+            margin-top: 36px;
+            font-size: 0.85em;
+            color: #54595d;
+            border-top: 1px solid #a2a9b1;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 18px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">📖 FP-ASM Knowledge Base</div>
+        <nav>
+            <a href="../index.html">Documentation Home</a>
+            <a href="../README.html">Overview</a>
+            <a href="../API_REFERENCE.html">API Reference</a>
+        </nav>
+    </header>
+    <div class="page">
+        <aside class="sidebar">
+            <h2>Wiki Pages</h2>
+            <ul>
+                <li><a class="" href="Home.html">Home</a></li>
+<li><a class="active" href="API-Advanced-Algorithms.html">API – Advanced Algorithms</a></li>
+<li><a class="" href="API-Core-Modules.html">API – Core Modules</a></li>
+<li><a class="" href="Generic-Functional-Interface.html">Generic Functional Interface</a></li>
+<li><a class="" href="Publishing-Tips.html">Publishing Tips</a></li>
+<li><a class="" href="Roadmap.html">Roadmap</a></li>
+            </ul>
+        </aside>
+        <main class="article">
+            <h1>API – Advanced Algorithms</h1>
+            
+Return to <a href="Home.html">Home</a> or review <a href="API-Core-Modules.html">API – Core Modules</a>.
+
+<h2>Data Structures</h2>
+
+<ul><li><code>DescriptiveStats</code> stores mean, variance, standard deviation, skewness, and kurtosis for a dataset.</li>
+<li><code>Quartiles</code> holds Q1, median (Q2), Q3, and the interquartile range.</li>
+<li><code>LinearRegression</code> captures slope, intercept, R², and standard error for a fitted line.</li>
+
+<h2>Functions</h2>
+
+<li><code>fp_descriptive_stats_f64(const double<em> data, size_t n, DescriptiveStats</em> stats)</code> computes all five descriptive moments in a single pass.</li>
+<li><code>fp_moments_f64(const double<em> data, size_t n, double</em> moments)</code> emits raw sums, squared sums, cubes, and fourth powers for downstream analytics.</li>
+<li><code>fp_percentile_f64(const double* sorted_data, size_t n, double p)</code> returns the <code>p</code>‑th percentile via linear interpolation on sorted input.</li>
+<li><code>fp_percentiles_f64(const double<em> sorted_data, size_t n, const double</em> p_values, size_t n_percentiles, double* results)</code> batches percentile lookups for multiple probabilities.</li>
+<li><code>fp_quartiles_f64(const double<em> sorted_data, size_t n, Quartiles</em> quartiles)</code> extracts Q1, median, Q3, and IQR together.</li>
+<li><code>fp_covariance_f64(const double<em> x, const double</em> y, size_t n)</code> calculates covariance using a fused single-pass algorithm.</li>
+<li><code>fp_correlation_f64(const double<em> x, const double</em> y, size_t n)</code> computes Pearson’s correlation coefficient, guarding edge cases (NaN for undefined).</li>
+<li><code>fp_linear_regression_f64(const double<em> x, const double</em> y, size_t n, LinearRegression* result)</code> fits <code>y = mx + b</code>, calculates R² and standard error, and handles degenerate datasets explicitly.</li>
+<li><code>fp_predict_f64(double x_value, const LinearRegression* model)</code> evaluates a fitted model at <code>x_value</code>.</li>
+<li><code>fp_detect_outliers_zscore_f64(const double<em> data, size_t n, double threshold, uint8_t</em> is_outlier)</code> marks points whose Z-score exceeds <code>threshold</code> in a two-pass analysis.</li>
+<li><code>fp_detect_outliers_iqr_f64(const double<em> sorted_data, size_t n, double k_factor, uint8_t</em> is_outlier)</code> labels outliers using the IQR rule on sorted inputs.</li></ul>
+
+Need callback-style wrappers instead? Jump to <a href="Generic-Functional-Interface.html">Generic Functional Interface</a>.
+
+            <div class="footer-note">This article was generated on 2025-11-01 15:46 UTC.</div>
+        </main>
+    </div>
+</body>
+</html>
